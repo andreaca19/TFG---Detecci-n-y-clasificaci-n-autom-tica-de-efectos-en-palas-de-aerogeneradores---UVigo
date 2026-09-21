@@ -1,12 +1,17 @@
+"""
+El siguiente código recorre los archivos XML en la carpeta de anotaciones, contando cuántas veces aparece cada clase de objeto. 
+El objetivo es conocer el número de veces que se etiquetó cada clase para su posterior relación con los resultados obtenidos
+en el entrenamiento.
+"""
 import os
 import xml.etree.ElementTree as ET
 from collections import Counter
 
 # Carpeta donde están los archivos XML
-xml_folder = "prueba_conversion/Annotations"
+xml_folder = "nombre_carpeta_principal/nombre_carpeta_archivos_xml"
 
-# Archivo de salida
-output_file = "prueba_conversion/recuento_clases.txt"
+# Archivo de salida en formato .txt
+output_file = "nombre_carpeta_principal/recuento_clases.txt"
 
 # Contador de objetos por clase
 class_counter = Counter()
