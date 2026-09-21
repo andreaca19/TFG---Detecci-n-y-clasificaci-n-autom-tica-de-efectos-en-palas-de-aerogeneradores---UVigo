@@ -3,6 +3,7 @@ El siguiente código recorre los archivos XML en la carpeta de anotaciones, cont
 El objetivo es conocer el número de veces que se etiquetó cada clase para su posterior relación con los resultados obtenidos
 en el entrenamiento.
 """
+
 import os
 import xml.etree.ElementTree as ET
 from collections import Counter
