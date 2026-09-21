@@ -1,10 +1,14 @@
+"""
+Código para el cambio de formato de los archivos de anotaciones en PASCAL VOC XML a YOLO
+Se lee cada archivo XML, se realizan las operaciones para obtener los datos necesarios para el formato YOLO
+y se crea un archivo .txt con estos datos manteniendo en el nombre del archivo.
+"""
+
 import os
 import xml.etree.ElementTree as ET
 
 
-# ============================================================
 # CONFIGURACIÓN
-# ============================================================
 
 image_width = 1024
 image_height = 1024
