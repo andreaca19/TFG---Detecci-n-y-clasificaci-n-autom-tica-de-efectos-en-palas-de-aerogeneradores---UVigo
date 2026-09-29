@@ -122,8 +122,6 @@ for filename in files:
     # Aviso en caso de producirse un error durante el procesamiento del archivo
     except Exception as e:
 
-        errores += 1
-
         print()
         print("  ❌ ERROR EN:", filename)
         print("  Motivo:", e)
