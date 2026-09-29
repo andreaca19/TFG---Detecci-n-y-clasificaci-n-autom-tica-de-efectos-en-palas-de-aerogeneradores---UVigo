@@ -1,21 +1,23 @@
 """
-Código para el cambio de formato de los archivos de anotaciones en PASCAL VOC XML a YOLO
+El siguiente código permite el cambio de formato de los archivos de anotaciones en PASCAL VOC XML a YOLO
 Se lee cada archivo XML, se realizan las operaciones para obtener los datos necesarios para el formato YOLO
-y se crea un archivo .txt con estos datos manteniendo en el nombre del archivo.
+y se crea un archivo .txt con estos datos manteniendo en el nombre del archivo original.
 """
 
 import os
 import xml.etree.ElementTree as ET
 
-
-# CONFIGURACIÓN
-
+# Variables de anchura y altura de la imagen 1024 x 1024
 image_width = 1024
 image_height = 1024
 
-annotations_path = "prueba_conversion/annotations"
-labels_path = "prueba_conversion/labels"
+# Carpeta donde están los archivos XML
+annotations_path = "nombre_carpeta_principal/nombre_carpeta_archivos_xml"
 
+# Carpeta donde se guardarán los archivos convertidos a formato YOLO
+labels_path = "nombre_carpeta_principal/labels"
+
+# Nombres de cada clase de objeto a detectar en la imagen
 classes = [
     "corrosion",
     "craze",
@@ -26,69 +28,29 @@ classes = [
 ]
 
 
-# ============================================================
-# CREAR CARPETA DE SALIDA
-# ============================================================
-
+# Crear carpeta de salida
 os.makedirs(labels_path, exist_ok=True)
 
-
-# ============================================================
-# OBTENER TODOS LOS ARCHIVOS XML
-# ============================================================
-
+# Obtener todos los archivos XML
 files = [
     f for f in os.listdir(annotations_path)
     if f.lower().endswith(".xml")
 ]
 
-print("============================================")
-print("ARCHIVOS ENCONTRADOS")
-print("============================================")
-print("Número de archivos XML encontrados:", len(files))
-print()
-
-
-# ============================================================
-# CONTADORES
-# ============================================================
-
-convertidos = 0
-errores = 0
-
-
-# ============================================================
-# RECORRER TODOS LOS XML
-# ============================================================
-
+# Recorrer todos los archivos XML
 for filename in files:
-
-    print("Procesando:", filename)
-
     try:
-
-        # ----------------------------------------------------
-        # RUTAS
-        # ----------------------------------------------------
 
         xml_path = os.path.join(annotations_path, filename)
 
         txt_filename = os.path.splitext(filename)[0] + ".txt"
         output_txt_path = os.path.join(labels_path, txt_filename)
 
-
-        # ----------------------------------------------------
-        # LEER XML
-        # ----------------------------------------------------
-
+        # Leer el XML
         tree = ET.parse(xml_path)
         root = tree.getroot()
 
-
-        # ----------------------------------------------------
-        # CONVERTIR OBJETOS
-        # ----------------------------------------------------
-
+        # Convertir objetos
         with open(output_txt_path, "w") as output_file:
 
             for obj in root.findall("object"):
@@ -97,11 +59,7 @@ for filename in files:
 
                 print("  Clase encontrada:", class_name)
 
-
-                # ------------------------------------------------
-                # COMPROBAR CLASE
-                # ------------------------------------------------
-
+                # Comprobar clase de objeto
                 if class_name not in classes:
 
                     print(
@@ -111,18 +69,9 @@ for filename in files:
 
                     continue
 
-
-                # ------------------------------------------------
-                # ID DE CLASE
-                # ------------------------------------------------
-
                 class_id = classes.index(class_name)
 
-
-                # ------------------------------------------------
-                # BOUNDING BOX PASCAL VOC
-                # ------------------------------------------------
-
+                # Bounding Box PASCAL VOC XML
                 bndbox = obj.find("bndbox")
 
                 xmin = float(
@@ -141,38 +90,22 @@ for filename in files:
                     bndbox.find("ymax").text
                 )
 
-
-                # ------------------------------------------------
-                # CENTRO
-                # ------------------------------------------------
-
+                # Calcular centro
                 x_center = (xmin + xmax) / 2
                 y_center = (ymin + ymax) / 2
 
-
-                # ------------------------------------------------
-                # ANCHURA Y ALTURA
-                # ------------------------------------------------
-
+                # Anchura y Altura
                 width = xmax - xmin
                 height = ymax - ymin
 
-
-                # ------------------------------------------------
-                # NORMALIZACIÓN YOLO
-                # ------------------------------------------------
-
+                # Normalización YOLO
                 x_center /= image_width
                 y_center /= image_height
 
                 width /= image_width
                 height /= image_height
 
-
-                # ------------------------------------------------
-                # ESCRIBIR LÍNEA YOLO
-                # ------------------------------------------------
-
+                # Escribir línea YOLO
                 output_file.write(
                     f"{class_id} "
                     f"{x_center:.6f} "
@@ -181,21 +114,7 @@ for filename in files:
                     f"{height:.6f}\n"
                 )
 
-
-        # ----------------------------------------------------
-        # ARCHIVO CONVERTIDO CORRECTAMENTE
-        # ----------------------------------------------------
-
-        convertidos += 1
-
-        print("  ✓ Archivo creado:", txt_filename)
-        print()
-
-
-    # ========================================================
-    # SI HAY UN ERROR, CONTINUAR CON EL SIGUIENTE
-    # ========================================================
-
+    # Aviso en caso de error
     except Exception as e:
 
         errores += 1
@@ -205,17 +124,3 @@ for filename in files:
         print("  Motivo:", e)
         print("  Se continúa con el siguiente archivo.")
         print()
-
-
-# ============================================================
-# RESUMEN FINAL
-# ============================================================
-
-print()
-print("============================================")
-print("CONVERSIÓN TERMINADA")
-print("============================================")
-print("XML encontrados:", len(files))
-print("Convertidos correctamente:", convertidos)
-print("Archivos con errores:", errores)
-print("============================================")
