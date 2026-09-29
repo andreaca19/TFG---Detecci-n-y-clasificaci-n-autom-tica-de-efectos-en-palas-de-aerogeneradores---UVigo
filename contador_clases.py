@@ -27,10 +27,8 @@ for filename in os.listdir(xml_folder):
         # Crear la ruta completa del archivo XML 
         xml_path = os.path.join(xml_folder, filename)
 
-        # Leer y procesar el archivo XML
+        # Leer y Obtener el elemento raíz del archivo XML
         tree = ET.parse(xml_path)
-
-        # Obtener el elemento raíz del archivo XML
         root = tree.getroot()
 
         # Buscar todos los objetos anotados en el archivo XML, obtener el nombre de la clase encontrada y contabilizarla
