@@ -95,7 +95,7 @@ for filename in files:
                     bndbox.find("ymax").text
                 )
 
-                # Calcular las coordenadas del centro e la Bounding Box
+                # Calcular las coordenadas del centro de la Bounding Box
                 x_center = (xmin + xmax) / 2
                 y_center = (ymin + ymax) / 2
 
