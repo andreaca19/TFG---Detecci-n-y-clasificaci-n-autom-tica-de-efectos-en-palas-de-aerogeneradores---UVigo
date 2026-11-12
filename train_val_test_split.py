@@ -1,5 +1,5 @@
 """
-El siguiente código generan los directorios destinados a las particiones de datos para el entrenamiento (train), validación (val) y prueba (test). 
+El siguiente código genera los directorios destinados a las particiones de datos para el entrenamiento (train), validación (val) y prueba (test). 
 Para cada se genera un directorio de imágenes y su correspondiente directorio de anotaciones, 6 en total. Se indica por parámetro train_pct, el 
 porcentaje destinado a entrenamiento y por código se calcula la división el porcentaje restante dividido equitativamente entre val y test.
 """
