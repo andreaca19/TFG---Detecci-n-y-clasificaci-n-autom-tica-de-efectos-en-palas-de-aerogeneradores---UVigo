@@ -39,11 +39,12 @@ def create_data_yaml(path_to_classes_txt, path_to_data_yaml):
 
   return
 
-# 
+# Comprobar si existe el archivo "classes.txt" y leer los nombres de las clases
 path_to_classes_txt = '/content/custom_data/data/classes.txt'
 path_to_data_yaml = '/content/data.yaml'
 
+# Ejecutar la función para crear el archivo de configuración data.yaml
 create_data_yaml(path_to_classes_txt, path_to_data_yaml)
 
-print('\nFile contents:\n')
+# Mostrar por pantalla el contenido del archivo data.yaml
 !cat /content/data.yaml
