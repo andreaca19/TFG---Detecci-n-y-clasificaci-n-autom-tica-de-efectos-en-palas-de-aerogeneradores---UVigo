@@ -5,7 +5,6 @@ porcentaje destinado a entrenamiento y por código se calcula la división el po
 """
 
 # Importar librerías necesarias para gestionar archivos, procesar archivos XML 
-
 from pathlib import Path
 import random
 import os
