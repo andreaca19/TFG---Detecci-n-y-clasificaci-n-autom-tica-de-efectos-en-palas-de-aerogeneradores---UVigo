@@ -24,6 +24,7 @@ def create_data_yaml(path_to_classes_txt, path_to_data_yaml):
       'path': '/content/data',
       'train': 'train/images',
       'val': 'validation/images',
+      'test': 'test/images',
       'nc': number_of_classes,
       'names': classes
   }
